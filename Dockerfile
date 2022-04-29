@@ -9,12 +9,13 @@ RUN make build
 FROM alpine:3.12
 COPY util/texlive.profile /
 
-RUN PACKAGES="wget libswitch-perl" \
+RUN PACKAGES="wget perl-switch" \
         && apk update \
         && apk add $PACKAGES \
+        && apk add fontconfig \
         && apk add ca-certificates \
         && wget -qO- \
-          "https://github.com/yihui/tinytex/raw/master/tools/install-unx.sh" | \
+          "https://raw.githubusercontent.com/yihui/tinytex/main/tools/install-unx.sh" | \
           sh -s - --admin --no-path \
         && mv ~/.TinyTeX /opt/TinyTeX \
         && /opt/TinyTeX/bin/*/tlmgr path add \
